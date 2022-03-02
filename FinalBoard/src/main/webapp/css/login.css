@@ -1,0 +1,32 @@
+@charset "UTF-8";
+.loginDiv{
+	background-color: #eeeeee;
+	width: 400px;
+	margin: 0 auto;
+	padding: 16px;
+	border-radius: 10px;
+	padding-bottom: 0px;
+}
+input{
+	height: 30px;
+	border: 1px solid #006BC4;
+	border-radius: 6px;
+	outline: none;
+	width: 98%;
+}
+input:focus{
+	border: 2px solid #002990;
+}
+.loginDiv > div{
+	margin-bottom: 20px;
+}
+.loginDiv > div > div:first-child{
+	margin-bottom: 6px;
+	font-weight: bold;
+	font-style: italic;
+	border-bottom: 2px solid #cccccc;
+	width: 40%;
+}
+.btn{
+	width: 99%;
+}

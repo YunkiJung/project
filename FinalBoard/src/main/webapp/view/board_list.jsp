@@ -76,9 +76,11 @@
 				</c:choose>
 			</tbody>
 		</table>
-		<div class="btnDiv">
-			<div class="btn" onclick="location.href='regBoardForm.bo';">글쓰기</div>
-		</div>
+		<c:if test="${not empty sessionScope.loginInfo }">
+			<div class="btnDiv">
+				<div class="btn" onclick="location.href='regBoardForm.bo';">글쓰기</div>
+			</div>
+		</c:if>
 	</div>
 </body>
 </html>

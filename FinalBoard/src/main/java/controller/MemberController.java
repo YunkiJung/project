@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dto.BoardDTO;
 import dto.MemberDTO;
@@ -80,6 +81,36 @@ public class MemberController extends HttpServlet {
 		else if(command.equals("/loginForm.me")) {
 			contentPage = "login";
 		}
+		else if(command.equals("/login.me")) {
+			String memId = request.getParameter("memId");
+			String memPw = request.getParameter("memPw");
+			
+			MemberDTO memberDTO = new MemberDTO();
+			memberDTO.setMemId(memId);
+			memberDTO.setMemPw(memPw);
+			
+			MemberDTO result = memberService.login(memberDTO);
+			
+			if(result != null) {
+				//로그인 성공한 회원의 id와 이름 정보를 session에 저장
+				//request, response, session -> 내장객체(jsp에서만)
+				HttpSession session = request.getSession();
+				session.setAttribute("loginInfo", result);
+			}
+			
+			
+			request.setAttribute("result", result);
+			path = "view/login_result.jsp";
+			
+		}
+		else if(command.equals("/logout.me")) {
+			HttpSession session = request.getSession();
+			session.removeAttribute("loginInfo");
+			
+			isRedirect = true;
+			path = "boardList.bo";
+		}
+		
 		
 		
 		request.setAttribute("contentPage", contentPage);

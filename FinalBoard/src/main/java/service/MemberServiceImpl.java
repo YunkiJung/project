@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
@@ -18,6 +20,14 @@ public class MemberServiceImpl implements MemberService {
 		int n = sqlSession.insert("memberMapper.insertMember", memberDTO);
 		sqlSession.commit();
 		return n;
+	}
+
+
+	@Override
+	public MemberDTO login(MemberDTO memberDTO) {
+		MemberDTO result = sqlSession.selectOne("memberMapper.login", memberDTO);
+		sqlSession.commit();
+		return result;
 	}
 	
 }
