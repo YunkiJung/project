@@ -53,8 +53,12 @@ public class BoardController extends HttpServlet {
 		//게시글 목록 페이지로 이동
 		if(command.equals("/boardList.bo")) {
 			
-			List<BoardDTO> list = boardService.selectBoardList();
+			String title = request.getParameter("title");
+			BoardDTO boardDTO = new BoardDTO();
+			boardDTO.setTitle(title);
+			List<BoardDTO> list = boardService.selectBoardList(boardDTO);
 			request.setAttribute("boardList", list);
+			
 			contentPage = "board_list";
 		}
 		//글쓰기 페이지로 이동
@@ -78,6 +82,17 @@ public class BoardController extends HttpServlet {
 			path = "boardList.bo";
 			
 		}
+		//게시글 상세보기
+		else if(command.equals("/boardDetail.bo")) {
+			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
+			
+			boardService.updateReadCnt(boardNum);
+			BoardDTO result = boardService.selectBoardDetail(boardNum);
+			request.setAttribute("boardInfo", result);
+			
+			contentPage = "board_detail";
+		}
+		
 		
 		
 		

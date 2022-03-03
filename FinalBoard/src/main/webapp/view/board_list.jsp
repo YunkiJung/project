@@ -7,34 +7,75 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	table{
+	.boardListTable{
 		width: 800px;
 		text-align: center;
 	}
-	thead tr{
+	.boardListTable thead tr{
 		border-top: 2px solid #115185;
 		border-bottom: 1px solid #EEEEEE;
 		background-color: #F7F7F7;
 		height: 40px;
 	}
-	tbody tr{
+	.boardListTable tbody tr{
 		border-bottom: 1px solid #EEEEEE;
 		height: 34px;
 	}
-	tbody tr td:nth-child(2){
+	.boardListTable tbody tr td:nth-child(2){
 		text-align: left;
 	}
-	tbody tr:nth-child(even){
+	.boardListTable tbody tr:nth-child(even){
 		background-color: #FAFAFA;
 	}
-	tbody tr:hover{
+	.boardListTable tbody tr:hover{
 		background-color: #FBFBFB;
+	}
+	.summaryDiv{
+		color: blue;
+		font-size: 12px;
+		margin-bottom: 6px;
+		display: inline-block;
+	}
+	.searchTable{
+		width: 800px;
+		height: 36px;
+		text-align: center;
+	}
+	.searchTable input[type="text"]{
+		width: 98%;
+		border-radius: 6px;
+		height: 26px;
+		border: 1px solid black;
+	}
+	
+	.searchTable input[type="submit"]{
+		width: 98%;
+		height: 30px;
+		border-radius: 6px;
+		outline: none;
 	}
 </style>
 </head>
 <body>
 	<div>
-		<table>
+		<div class="searchDiv">
+			<form action="boardList.bo" method="post">
+				<table class="searchTable">
+					<tr>
+						<td>
+							제목
+						</td>
+						<td><input type="text" name="title"></td>
+						<td><input type="submit" value="검색"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div class="summaryDiv">
+			총 ${boardList.size() }개의 게시글이 조회되었습니다.
+		</div>
+		
+		<table class="boardListTable">
 			<colgroup>
 				<col width="10%">
 				<col width="*">
@@ -62,10 +103,11 @@
 						</tr>
 					</c:when>
 					<c:otherwise>
-						<c:forEach items="${boardList }" var="board">
+						<c:forEach items="${boardList }" var="board" varStatus="status">
 							<tr>
-								<td>${board.boardNum }</td>
-								<td>${board.title }</td>
+								<%-- <td>${board.boardNum } / ${status.index } / ${status.count }</td> --%>
+								<td>${boardList.size() - status.index }</td>
+								<td><a href="boardDetail.bo?boardNum=${board.boardNum }">${board.title }</a></td>
 								<td>${board.writer }</td>
 								<td>${board.createDate }</td>
 								<td>${board.readCnt }</td>

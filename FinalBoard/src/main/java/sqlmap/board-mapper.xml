@@ -21,7 +21,10 @@
 			, TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE
 			, READ_CNT
 		FROM BOARD
-		ORDER BY CREATE_DATE DESC
+		<if test="title != null and !title.equals('')">
+			WHERE UPPER(TITLE) LIKE '%'||UPPER(#{title})||'%'
+		</if>
+		ORDER BY BOARD_NUM DESC
 	</select>
 	<insert id="insertBoard">
 		INSERT INTO BOARD (
@@ -38,6 +41,26 @@
 			, 'N'
 		)
 	</insert>
+	<select id="selectBoardDetail" resultMap="board">
+		SELECT BOARD_NUM
+			, TITLE
+			, CONTENT
+			, WRITER
+			, CREATE_DATE
+			, READ_CNT
+			, IS_PRIVATE
+			, BOARD_PW
+			, ATTACHED_NAME
+		FROM BOARD
+		WHERE BOARD_NUM = #{boardNum}
+	</select>
+	<update id="updateReadCnt">
+		UPDATE BOARD
+		SET 
+		READ_CNT = READ_CNT + 1
+		WHERE BOARD_NUM = #{boardNum}
+	</update>
+	
 </mapper>
 
 

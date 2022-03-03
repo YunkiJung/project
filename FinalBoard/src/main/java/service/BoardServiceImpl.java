@@ -16,8 +16,8 @@ public class BoardServiceImpl implements BoardService{
 	
 	
 	@Override
-	public List<BoardDTO> selectBoardList() {
-		List<BoardDTO> list = sqlSession.selectList("boardMapper.selectBoardList");
+	public List<BoardDTO> selectBoardList(BoardDTO boardDTO) {
+		List<BoardDTO> list = sqlSession.selectList("boardMapper.selectBoardList", boardDTO);
 		sqlSession.commit();
 		return list;
 	}
@@ -29,6 +29,23 @@ public class BoardServiceImpl implements BoardService{
 		sqlSession.commit();
 		
 	}
+
+
+	@Override
+	public BoardDTO selectBoardDetail(int boardNum) {
+		BoardDTO result = sqlSession.selectOne("boardMapper.selectBoardDetail", boardNum);
+		sqlSession.commit();
+		return result;
+	}
+
+
+	@Override
+	public void updateReadCnt(int boardNum) {
+		sqlSession.update("boardMapper.updateReadCnt", boardNum);
+		sqlSession.commit(); 
+	}
+
+
 	
 }
 
