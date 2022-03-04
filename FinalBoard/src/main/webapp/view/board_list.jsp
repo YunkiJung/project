@@ -63,9 +63,12 @@
 				<table class="searchTable">
 					<tr>
 						<td>
-							제목
+							<select name="searchKeyword">
+								<option value="TITLE">제 목</option>
+								<option value="WRITER">작성자</option>
+							</select>
 						</td>
-						<td><input type="text" name="title"></td>
+						<td><input type="text" name="searchValue"></td>
 						<td><input type="submit" value="검색"></td>
 					</tr>
 				</table>

@@ -14,6 +14,7 @@
 		<result column="ATTACHED_NAME" 	property="attachedName"/>
 	</resultMap>
 	
+	
 	<select id="selectBoardList" resultMap="board">
 		SELECT BOARD_NUM
 			, TITLE
@@ -21,8 +22,8 @@
 			, TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE
 			, READ_CNT
 		FROM BOARD
-		<if test="title != null and !title.equals('')">
-			WHERE UPPER(TITLE) LIKE '%'||UPPER(#{title})||'%'
+		<if test="searchValue != null and !searchValue.equals('')">
+			WHERE UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
 		</if>
 		ORDER BY BOARD_NUM DESC
 	</select>

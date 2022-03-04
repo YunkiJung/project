@@ -53,9 +53,13 @@ public class BoardController extends HttpServlet {
 		//게시글 목록 페이지로 이동
 		if(command.equals("/boardList.bo")) {
 			
-			String title = request.getParameter("title");
+			String searchKeyword = request.getParameter("searchKeyword");
+			String searchValue = request.getParameter("searchValue");
+			
 			BoardDTO boardDTO = new BoardDTO();
-			boardDTO.setTitle(title);
+			boardDTO.setSearchKeyword(searchKeyword);
+			boardDTO.setSearchValue(searchValue);
+			
 			List<BoardDTO> list = boardService.selectBoardList(boardDTO);
 			request.setAttribute("boardList", list);
 			

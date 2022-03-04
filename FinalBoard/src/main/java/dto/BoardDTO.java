@@ -11,6 +11,11 @@ public class BoardDTO {
 	private String boardPw;
 	private String attachedName;
 	
+	//검색을 위한 변수
+	private String searchKeyword;
+	private String searchValue;
+	
+	
 	public BoardDTO() {
 		
 	}
@@ -99,6 +104,26 @@ public class BoardDTO {
 
 	public void setAttachedName(String attachedName) {
 		this.attachedName = attachedName;
+	}
+	
+	
+	
+	
+
+	public String getSearchKeyword() {
+		return searchKeyword;
+	}
+
+	public void setSearchKeyword(String searchKeyword) {
+		this.searchKeyword = searchKeyword;
+	}
+
+	public String getSearchValue() {
+		return searchValue;
+	}
+
+	public void setSearchValue(String searchValue) {
+		this.searchValue = searchValue;
 	}
 
 	@Override
