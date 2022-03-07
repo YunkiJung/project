@@ -9,8 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dto.BoardDTO;
+import dto.MemberDTO;
+import dto.ReplyDTO;
 import service.BoardServiceImpl;
 
 @WebServlet("*.bo")
@@ -90,14 +93,57 @@ public class BoardController extends HttpServlet {
 		else if(command.equals("/boardDetail.bo")) {
 			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
 			
-			boardService.updateReadCnt(boardNum);
 			BoardDTO result = boardService.selectBoardDetail(boardNum);
 			request.setAttribute("boardInfo", result);
+			boardService.updateReadCnt(boardNum);
+			
+			List<ReplyDTO> replyList = boardService.selectReplyList(boardNum);
+			
+			request.setAttribute("replyList", replyList);
 			
 			contentPage = "board_detail";
 		}
-		
-		
+		//댓글 등록
+		else if(command.equals("/regReply.bo")) {
+			String content = request.getParameter("content");
+			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
+			HttpSession session = request.getSession();
+			String memId = ((MemberDTO)session.getAttribute("loginInfo")).getMemId();
+			
+			ReplyDTO replyDTO = new ReplyDTO();
+			replyDTO.setContent(content);
+			replyDTO.setBoardNum(boardNum);
+			replyDTO.setWriter(memId);
+			
+			boardService.insertReply(replyDTO);
+			
+			isRedirect = true;
+			path = "boardDetail.bo?boardNum=" + boardNum;
+			
+		}
+		else if(command.equals("/deleteReply.bo")) {
+			int replyNum = Integer.parseInt(request.getParameter("replyNum"));
+			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
+			
+			boardService.deleteReply(replyNum);
+			
+			isRedirect = true;
+			path = "boardDetail.bo?boardNum=" + boardNum;
+			
+		}
+		//게시글 삭제
+		else if(command.equals("/deleteBoard.bo")) {
+			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
+			
+			//게시글에 달린 댓글 삭제
+			
+			//게시글 삭제
+			boardService.deleteBoard(boardNum);
+			
+			isRedirect = true;
+			path = "boardList.bo";
+			
+		}
 		
 		
 		request.setAttribute("contentPage", contentPage);

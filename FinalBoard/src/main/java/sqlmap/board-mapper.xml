@@ -14,6 +14,14 @@
 		<result column="ATTACHED_NAME" 	property="attachedName"/>
 	</resultMap>
 	
+	<resultMap type="dto.ReplyDTO" 		id="reply">
+		<id 	column="REPLY_NUM" 		property="replyNum"/>
+		<result column="CONTENT" 		property="content"/>
+		<result column="WRITER" 		property="writer"/>
+		<result column="CREATE_DATE" 	property="createDate"/>
+		<result column="BOARD_NUM" 		property="boardNum"/>
+	</resultMap>
+	
 	
 	<select id="selectBoardList" resultMap="board">
 		SELECT BOARD_NUM
@@ -61,6 +69,44 @@
 		READ_CNT = READ_CNT + 1
 		WHERE BOARD_NUM = #{boardNum}
 	</update>
+	<delete id="deleteBoard">
+		DELETE BOARD
+		WHERE BOARD_NUM = #{boardNum}
+	</delete>
+	
+	
+	<insert id="insertReply">
+		INSERT INTO REPLY (
+			REPLY_NUM
+			, CONTENT
+			, WRITER
+			, BOARD_NUM
+		) VALUES (
+			(SELECT NVL(MAX(REPLY_NUM), 0) + 1 FROM REPLY)
+			, #{content}
+			, #{writer}
+			, #{boardNum}
+		)
+	</insert>
+	<select id="selectReplyList" resultMap="reply">
+		SELECT REPLY_NUM
+			, CONTENT
+			, WRITER
+			, TO_CHAR(CREATE_DATE, 'YYYY-MM-DD HH24:MI') AS CREATE_DATE
+		FROM REPLY
+		WHERE BOARD_NUM = #{boardNum}
+		ORDER BY REPLY_NUM DESC
+	</select>
+	
+	<delete id="deleteReply">
+		DELETE FROM REPLY
+		WHERE REPLY_NUM = #{replyNum}
+	</delete>
+	
+	<delete id="deleteReplyForDeleteBoard">
+		DELETE REPLY
+		WHERE BOARD_NUM = #{boardNum}
+	</delete>
 	
 </mapper>
 

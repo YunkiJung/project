@@ -1,5 +1,4 @@
-/controller/
-/dto/
-/log4j.properties
 /service/
+/controller/
 /sqlmap/
+/dto/
