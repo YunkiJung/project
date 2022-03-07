@@ -30,6 +30,7 @@ public interface BoardService {
 	//댓글 삭제
 	void deleteReply(int replyNum);
 	
+	
 }
 
 

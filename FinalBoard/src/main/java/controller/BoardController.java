@@ -143,6 +143,7 @@ public class BoardController extends HttpServlet {
 			isRedirect = true;
 			path = "boardList.bo";
 			
+			
 		}
 		
 		
