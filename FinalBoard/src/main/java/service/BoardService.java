@@ -21,6 +21,11 @@ public interface BoardService {
 	//게시글 삭제
 	void deleteBoard(int boardNum);
 	
+	//게시글 개수 조회
+	int selectBoardListCnt(BoardDTO boardDTO);
+	
+	
+	
 	//댓글 등록
 	void insertReply(ReplyDTO replyDTO);
 	
@@ -29,6 +34,7 @@ public interface BoardService {
 	
 	//댓글 삭제
 	void deleteReply(int replyNum);
+	
 	
 	
 }

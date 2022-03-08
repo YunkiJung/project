@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import dto.BoardDTO;
 import dto.MemberDTO;
+import dto.PageDTO;
 import dto.ReplyDTO;
 import service.BoardServiceImpl;
 
@@ -56,15 +57,35 @@ public class BoardController extends HttpServlet {
 		//게시글 목록 페이지로 이동
 		if(command.equals("/boardList.bo")) {
 			
+			//현재 페이지 데이터
+			int nowPage = 1;
+			String nowPageStr = request.getParameter("nowPage");
+			if(nowPageStr != null) {
+				nowPage = Integer.parseInt(nowPageStr);
+			}
+			
+			
 			String searchKeyword = request.getParameter("searchKeyword");
 			String searchValue = request.getParameter("searchValue");
+			
 			
 			BoardDTO boardDTO = new BoardDTO();
 			boardDTO.setSearchKeyword(searchKeyword);
 			boardDTO.setSearchValue(searchValue);
 			
+			//전체 데이터 수
+			int totalCnt = boardService.selectBoardListCnt(boardDTO);
+			
+			boardDTO.setTotalCnt(totalCnt);
+			boardDTO.setNowPage(nowPage);
+			boardDTO.setPageInfo();
+			
+			
+			
 			List<BoardDTO> list = boardService.selectBoardList(boardDTO);
 			request.setAttribute("boardList", list);
+			
+			request.setAttribute("pageInfo", boardDTO);
 			
 			contentPage = "board_list";
 		}

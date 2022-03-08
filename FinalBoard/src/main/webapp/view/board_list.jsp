@@ -54,6 +54,13 @@
 		border-radius: 6px;
 		outline: none;
 	}
+	.pageList{
+		text-align: center;
+		margin-top: 30px;
+	}
+	.pageList a{
+		margin: 8px;
+	}
 </style>
 </head>
 <body>
@@ -75,7 +82,7 @@
 			</form>
 		</div>
 		<div class="summaryDiv">
-			총 ${boardList.size() }개의 게시글이 조회되었습니다.
+			총 ${pageInfo.totalCnt }개의 게시글이 조회되었습니다.
 		</div>
 		
 		<table class="boardListTable">
@@ -109,7 +116,7 @@
 						<c:forEach items="${boardList }" var="board" varStatus="status">
 							<tr>
 								<%-- <td>${board.boardNum } / ${status.index } / ${status.count }</td> --%>
-								<td>${boardList.size() - status.index }</td>
+								<td>${board.boardNum }</td>
 								<td><a href="boardDetail.bo?boardNum=${board.boardNum }">${board.title }</a></td>
 								<td>${board.writer }</td>
 								<td>${board.createDate }</td>
@@ -126,6 +133,19 @@
 				<div class="btn" onclick="location.href='regBoardForm.bo';">글쓰기</div>
 			</div>
 		</c:if>
+		<div class="pageList">
+			<c:if test="${pageInfo.prev }">
+				<a href="boardList.bo?nowPage=${pageInfo.beginPage - 1 }">이전</a>
+			</c:if>
+			<c:forEach begin="${pageInfo.beginPage }" end="${pageInfo.endPage }" var="pageIndex">
+				<a href="boardList.bo?nowPage=${pageIndex }">
+					<span <c:if test="${pageInfo.nowPage eq pageIndex }">style="color: red;"</c:if> >${pageIndex}</span>
+				</a>
+			</c:forEach>
+			<c:if test="${pageInfo.next }">
+				<a href="boardList.bo?nowPage=${pageInfo.endPage + 1 }">다음</a>
+			</c:if>
+		</div>
 	</div>
 </body>
 </html>
