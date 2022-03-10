@@ -7,11 +7,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="regBoard.bo" method="post">
+<form action="regBoard.bo" method="post" id="boardWriteForm">
 	제목 : <input type="text" name="title" required><br>
 	내용 : <input type="text" name="content"><br>
 	작성자 : <input type="text" name="writer" value="${sessionScope.loginInfo.memId }" readonly><br>
-	<input type="submit" value="등록">
-</form>	
+	비밀글 <input id="chk" type="checkbox" onclick="setPassword();"><br>
+	<input type="submit" value="등록" id="last">
+</form>
+
+<script type="text/javascript" src="javascript/board_write.js"></script>
 </body>
 </html>
