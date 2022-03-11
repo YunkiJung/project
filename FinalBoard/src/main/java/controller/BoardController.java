@@ -98,11 +98,16 @@ public class BoardController extends HttpServlet {
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
 			String writer = request.getParameter("writer");
+			String isPrivate = request.getParameter("isPrivate");
+			String boardPw = request.getParameter("boardPw");
+			
 			
 			BoardDTO boardDTO = new BoardDTO();
 			boardDTO.setTitle(title);
 			boardDTO.setContent(content);
 			boardDTO.setWriter(writer);
+			boardDTO.setIsPrivate(isPrivate != null ? "Y" : "N");
+			boardDTO.setBoardPw(boardPw);
 			
 			boardService.insertBoard(boardDTO);
 			
@@ -122,7 +127,16 @@ public class BoardController extends HttpServlet {
 			
 			request.setAttribute("replyList", replyList);
 			
+			
 			contentPage = "board_detail";
+			
+		}
+		else if(command.equals("/confirmPw.bo")) {
+			String boardPw = request.getParameter("boardPw");
+			request.setAttribute("boardPw", boardPw);
+			request.setAttribute("boardNum", request.getParameter("boardNum"));
+			
+			contentPage = "confirm_pw";
 		}
 		//댓글 등록
 		else if(command.equals("/regReply.bo")) {

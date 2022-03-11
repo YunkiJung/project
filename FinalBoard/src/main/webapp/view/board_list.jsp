@@ -117,7 +117,21 @@
 							<tr>
 								<%-- <td>${board.boardNum } / ${status.index } / ${status.count }</td> --%>
 								<td>${board.boardNum }</td>
-								<td><a href="boardDetail.bo?boardNum=${board.boardNum }">${board.title }</a></td>
+								<td>
+									<c:choose>
+										<c:when test="${board.isPrivate eq 'Y' }">
+											<a href="confirmPw.bo?boardPw=${board.boardPw }&boardNum=${board.boardNum}">
+												<img alt="private" src="image/private.jpeg" width="20px">
+												${board.title }
+											</a>
+										</c:when>
+										<c:otherwise>
+											<a href="boardDetail.bo?boardNum=${board.boardNum }">
+												${board.title }
+											</a>
+										</c:otherwise>
+									</c:choose>
+								</td>
 								<td>${board.writer }</td>
 								<td>${board.createDate }</td>
 								<td>${board.readCnt }</td>

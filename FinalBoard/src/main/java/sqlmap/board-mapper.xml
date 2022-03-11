@@ -29,6 +29,8 @@
 		    , WRITER
 		    , CREATE_DATE
 		    , READ_CNT
+		    , IS_PRIVATE
+		    , BOARD_PW
 		    , ATTACHED_NAME
 		    , ROW_NUM
 		FROM 
@@ -38,6 +40,8 @@
 		        , WRITER
 		        , CREATE_DATE
 		        , READ_CNT
+		        , IS_PRIVATE
+		        , BOARD_PW
 		        , ATTACHED_NAME
 		        , ROWNUM AS ROW_NUM
 		    FROM 
@@ -47,6 +51,8 @@
 		            , WRITER
 		            , TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') CREATE_DATE
 		            , READ_CNT
+		            , IS_PRIVATE
+		            , BOARD_PW
 		            , ATTACHED_NAME
 		        FROM BOARD
 		        <if test="searchValue != null and !searchValue.equals('')">
@@ -67,12 +73,14 @@
 			, CONTENT
 			, WRITER
 			, IS_PRIVATE
+			, BOARD_PW
 		) VALUES (
 			(SELECT NVL(MAX(BOARD_NUM), 0) + 1 FROM BOARD)
 			, #{title}
 			, #{content}
 			, #{writer}
-			, 'N'
+			, #{isPrivate}
+			, #{boardPw}
 		)
 	</insert>
 	<select id="selectBoardDetail" resultMap="board">
