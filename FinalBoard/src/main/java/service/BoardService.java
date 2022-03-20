@@ -24,7 +24,7 @@ public interface BoardService {
 	//게시글 개수 조회
 	int selectBoardListCnt(BoardDTO boardDTO);
 	
-	
+	//화면 - 서버프로그램 - 데이터베이
 	
 	//댓글 등록
 	void insertReply(ReplyDTO replyDTO);

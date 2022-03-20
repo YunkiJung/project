@@ -82,7 +82,7 @@
 			</form>
 		</div>
 		<div class="summaryDiv">
-			총 ${pageInfo.totalCnt }개의 게시글이 조회되었습니다.
+			총 ${pageInfo.totalCnt }개의 게시글이 조회되었습니다. 
 		</div>
 		
 		<table class="boardListTable">

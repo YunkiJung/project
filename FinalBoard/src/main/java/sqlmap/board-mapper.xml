@@ -3,7 +3,7 @@
 
 <mapper namespace="boardMapper">
 	<resultMap type="dto.BoardDTO" 		id="board">
-		<id column="BOARD_NUM" 			property="boardNum"/>
+		<id column="BOARD_NUM" 			property="boardNum"/> 
 		<result column="TITLE" 			property="title"/>
 		<result column="CONTENT" 		property="content"/>
 		<result column="WRITER" 		property="writer"/>
